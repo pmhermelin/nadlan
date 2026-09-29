@@ -11,7 +11,26 @@
         // S-04 (Story J) - הצגת הנכסים שלי
         public void PrintAgentProperties(User agent)
         {
-            // TODO
+            if (agent == null || !agent.IsAgent())
+            {
+                Console.WriteLine("שגיאה: פעולה זו זמינה לסוכנים בלבד");
+                return;
+            }
+
+            bool found = false;
+            for (int i = 0; i < propertyCount; i++)
+            {
+                if (properties[i].GetAgent() == agent)
+                {
+                    Console.WriteLine(properties[i].ToString());
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine("אין נכסים המשויכים אליך");
+            }
         }
 
         // S-03 (Story I) - עדכון זמינות נכס
