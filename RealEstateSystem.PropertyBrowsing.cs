@@ -86,7 +86,33 @@
         // M-01 (Story M) - הצגת כל נכסי הסוכנות
         public void PrintAllRealEstate()
         {
-            // TODO
+            Console.WriteLine("=== סקירת כלל נכסי הסוכנות ===");
+
+            if (propertyCount == 0)
+            {
+                Console.WriteLine("אין נכסים במערכת");
+                return;
+            }
+
+            int availableCount = 0;
+            double totalPrice = 0;
+
+            for (int i = 0; i < propertyCount; i++)
+            {
+                Console.WriteLine(properties[i].ToString());
+
+                if (properties[i].IsAvailable())
+                {
+                    availableCount++;
+                }
+                totalPrice += properties[i].GetPrice();
+            }
+
+            Console.WriteLine("--- סיכום ---");
+            Console.WriteLine("סך הכול נכסים: " + propertyCount);
+            Console.WriteLine("זמינים: " + availableCount);
+            Console.WriteLine("לא זמינים: " + (propertyCount - availableCount));
+            Console.WriteLine("סכום המחירים: " + totalPrice.ToString("N0") + " ש\"ח");
         }
     }
 }

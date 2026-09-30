@@ -113,7 +113,45 @@
         // S-02 (Story H) - הסרת נכס
         public void RemoveProperty(User agent)
         {
-            // TODO
+            if (agent == null || !agent.IsAgent())
+            {
+                Console.WriteLine("שגיאה: פעולה זו זמינה לסוכנים בלבד");
+                return;
+            }
+
+            PrintAgentProperties(agent);
+
+            int id = ReadInt("הזן מזהה נכס להסרה:");
+            int index = FindPropertyIndex(id);
+
+            if (index == -1)
+            {
+                Console.WriteLine("נכס לא נמצא");
+                return;
+            }
+
+            Property property = properties[index];
+
+            if (property.GetAgent() != agent)
+            {
+                Console.WriteLine("הנכס אינו משויך אליך");
+                return;
+            }
+
+            if (HasAppointments(property))
+            {
+                Console.WriteLine("לא ניתן להסיר נכס שקיימות לו פגישות");
+                return;
+            }
+
+            for (int i = index; i < propertyCount - 1; i++)
+            {
+                properties[i] = properties[i + 1];
+            }
+            properties[propertyCount - 1] = null;
+            propertyCount--;
+
+            Console.WriteLine("הנכס הוסר בהצלחה");
         }
     }
 }
