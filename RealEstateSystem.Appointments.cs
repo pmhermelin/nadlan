@@ -94,7 +94,43 @@
         // S-05 (Story K) - הצגת פגישות לנכס
         public void PrintPropertyAppointments(User agent)
         {
-            // TODO
+            if (agent == null || !agent.IsAgent())
+            {
+                Console.WriteLine("שגיאה: פעולה זו זמינה לסוכנים בלבד");
+                return;
+            }
+
+            PrintAgentProperties(agent);
+
+            int id = ReadInt("הזן מזהה נכס:");
+            Property property = FindPropertyById(id);
+
+            if (property == null)
+            {
+                Console.WriteLine("נכס לא נמצא");
+                return;
+            }
+
+            if (property.GetAgent() != agent)
+            {
+                Console.WriteLine("הנכס אינו משויך אליך");
+                return;
+            }
+
+            bool found = false;
+            for (int i = 0; i < appointmentCount; i++)
+            {
+                if (appointments[i].GetProperty() == property)
+                {
+                    Console.WriteLine(appointments[i].ToString());
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine("אין פגישות לנכס זה");
+            }
         }
 
         // S-06 (Story L) - אישור בקשת פגישה
