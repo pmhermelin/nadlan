@@ -84,8 +84,14 @@
         }
 
         // M-01 (Story M) - הצגת כל נכסי הסוכנות
-        public void PrintAllRealEstate()
+        public void PrintAllRealEstate(User manager)
         {
+            if (manager == null || !manager.IsManager())
+            {
+                Console.WriteLine("שגיאה: פעולה זו זמינה למנהלים בלבד");
+                return;
+            }
+
             Console.WriteLine("=== סקירת כלל נכסי הסוכנות ===");
 
             if (propertyCount == 0)
