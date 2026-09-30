@@ -136,7 +136,52 @@
         // S-06 (Story L) - אישור בקשת פגישה
         public void ConfirmAppointment(User agent)
         {
-            // TODO
+            if (agent == null || !agent.IsAgent())
+            {
+                Console.WriteLine("שגיאה: פעולה זו זמינה לסוכנים בלבד");
+                return;
+            }
+
+            bool hasPending = false;
+            for (int i = 0; i < appointmentCount; i++)
+            {
+                if (appointments[i].GetProperty().GetAgent() == agent && !appointments[i].IsConfirmed())
+                {
+                    Console.WriteLine(appointments[i].ToString());
+                    hasPending = true;
+                }
+            }
+
+            if (!hasPending)
+            {
+                Console.WriteLine("אין בקשות ממתינות לאישור");
+                return;
+            }
+
+            int id = ReadInt("הזן מזהה פגישה לאישור:");
+            Appointment appointment = FindAppointmentById(id);
+
+            if (appointment == null)
+            {
+                Console.WriteLine("פגישה לא נמצאה");
+                return;
+            }
+
+            if (appointment.GetProperty().GetAgent() != agent)
+            {
+                Console.WriteLine("הפגישה אינה משויכת לנכס שלך");
+                return;
+            }
+
+            if (appointment.IsConfirmed())
+            {
+                Console.WriteLine("הפגישה כבר אושרה");
+                return;
+            }
+
+            appointment.SetConfirmed(true);
+
+            Console.WriteLine("הפגישה אושרה בהצלחה");
         }
 
         // M-03 (Story O) - הצגת פגישות של משתמש
