@@ -187,7 +187,42 @@
         // M-03 (Story O) - הצגת פגישות של משתמש
         public void PrintUserAppointments(User user)
         {
-            // TODO
+            if (user == null)
+            {
+                Console.WriteLine("שגיאה: משתמש לא מחובר");
+                return;
+            }
+
+            bool found = false;
+            for (int i = 0; i < appointmentCount; i++)
+            {
+                Appointment appointment = appointments[i];
+                bool match;
+
+                if (user.IsManager())
+                {
+                    match = true;
+                }
+                else if (user.IsAgent())
+                {
+                    match = appointment.GetProperty().GetAgent() == user;
+                }
+                else
+                {
+                    match = appointment.GetClient() == user;
+                }
+
+                if (match)
+                {
+                    Console.WriteLine(appointment.ToString());
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine("לא נמצאו פגישות");
+            }
         }
     }
 }
