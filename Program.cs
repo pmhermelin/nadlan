@@ -126,7 +126,7 @@
                 Console.WriteLine("בחר אפשרות:");
                 string choice = Console.ReadLine();
 
-                if (choice == "1") system.PrintAllRealEstate();
+                if (choice == "1") system.PrintAllRealEstate(manager);
                 else if (choice == "2") system.PrintUserAppointments(manager);
                 else if (choice == "3") active = false;
                 else Console.WriteLine("בחירה לא חוקית");
