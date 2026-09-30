@@ -69,7 +69,26 @@
         // L-06 (Story F) - הצגת הבקשות שלי
         public void PrintClientAppointments(User client)
         {
-            // TODO
+            if (client == null || !client.IsClient())
+            {
+                Console.WriteLine("שגיאה: פעולה זו זמינה ללקוחות בלבד");
+                return;
+            }
+
+            bool found = false;
+            for (int i = 0; i < appointmentCount; i++)
+            {
+                if (appointments[i].GetClient() == client)
+                {
+                    Console.WriteLine(appointments[i].ToString());
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine("אין לך פגישות");
+            }
         }
 
         // S-05 (Story K) - הצגת פגישות לנכס
